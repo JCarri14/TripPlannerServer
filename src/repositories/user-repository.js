@@ -19,6 +19,10 @@ class UserRepository {
   findOne(query) {
     return normalizeDBResponse(db.User.findOne(query, "-__v"));
   }
+
+  findById(id) {
+    return normalizeDBResponse(db.User.findById(id, "-__v"));
+  }
 }
 
 module.exports = new UserRepository();
