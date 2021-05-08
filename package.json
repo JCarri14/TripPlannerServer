@@ -4,8 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "yarn run dev",
+    "build": "yarn run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:js": "yarn run lint:js",
+    "lint:js:fix": "yarn run lint:js:fix",
+    "lint:format": "yarn run lint:format",
+    "lint:format:check": "yarn run lint:format:check",
+    "precommit": "yarn workspaces run precommit"
   },
   "author": "Joan Carrion",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": "https://github.com/JCarri14/TripPlannerServer.git",
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "commitlint": "^12.1.1",
+    "eslint": "^7.26.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0"
+  },
+  "dependencies": {}
 }
