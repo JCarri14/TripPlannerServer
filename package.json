@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "yarn run dev",
-    "build": "yarn run build",
+    "start": "node ./src/index.js",
+    "dev": "nodemon --inspect --trace-warnings ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:js": "yarn run lint:js",
-    "lint:js:fix": "yarn run lint:js:fix",
-    "lint:format": "yarn run lint:format",
-    "lint:format:check": "yarn run lint:format:check",
-    "precommit": "yarn workspaces run precommit"
+    "lint:js": "eslint . --ext .js",
+    "lint:js:fix": "yarn run lint:js -- --fix",
+    "lint:format": "prettier --write .",
+    "lint:format:check": "prettier --check .",
+    "precommit": "lint-staged"
   },
   "author": "Joan Carrion",
   "license": "ISC",
@@ -24,5 +24,18 @@
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.21.1",
+    "babel-eslint": "^10.1.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "mongoose": "^5.12.7",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1",
+    "validator": "^13.6.0"
+  }
 }
