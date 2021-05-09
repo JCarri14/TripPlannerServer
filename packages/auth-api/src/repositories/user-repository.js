@@ -1,5 +1,5 @@
 const db = require("../models");
-const normalizeDBResponse = require("../../utils/normalizeDBResponse");
+const normalizeDBResponse = require("../utils/normalizeDBResponse");
 
 class UserRepository {
   create(options) {
