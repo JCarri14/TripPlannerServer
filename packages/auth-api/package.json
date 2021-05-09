@@ -39,6 +39,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
     "morgan": "^1.10.0",
+    "rand-token": "^1.0.1",
     "validator": "^13.6.0"
   }
 }
