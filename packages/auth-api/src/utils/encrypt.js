@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { config } = require("./config");
+const { config } = require("../config");
 
 /**
  * Encrypts the string requested
@@ -8,8 +8,8 @@ const { config } = require("./config");
  * @returns object encrypted data
  */
 async function encryptString(data) {
-  const salt = await bcrypt.genSalt(config.encrypt.salt);
-  const encryptedData = await bcrypt.hash(password, salt);
+  const salt = await bcrypt.genSalt(Number(config.encrypt.salt));
+  const encryptedData = await bcrypt.hash(data, salt);
   return encryptedData;
 }
 
@@ -20,5 +20,5 @@ async function compareEncrypted({ plainData, encryptedData }) {
 
 module.exports = {
   encryptString: encryptString,
-  compareData: compareData,
+  compareEncrypted: compareEncrypted,
 };
