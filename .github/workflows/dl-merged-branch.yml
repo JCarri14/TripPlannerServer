@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - main
       - dev
+      - gateway-dev
       - auth-api-dev
       - data-api-dev
 
