@@ -1,5 +1,41 @@
 const { UserRepo, TripRepo } = require("../repositories");
 
+async function signUp(req, res, next) {
+  const { uid, email } = req.user;
+
+  try {
+    const response = await UserRepo.findOne({ email: email });
+
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(200).send({
+        data: "OK",
+        error: null,
+      });
+    }
+
+    await UserRepo.create({
+      extraIds: {
+        authServiceId: uid
+      },
+      email: email,
+    });
+
+    res.status(201).send({
+      data: "OK",
+      error: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function fetchUsers(req, res, next) {
   try {
     const dbResponse = await UserRepo.find();
@@ -125,6 +161,7 @@ async function fetchUserFollowings(req, res, next) {
 }
 
 module.exports = {
+  signUp: signUp,
   fetchUsers: fetchUsers,
   fetchUserById: fetchUserById,
   fetchUserTrips: fetchUserTrips,
