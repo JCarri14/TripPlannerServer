@@ -4,10 +4,6 @@ const { isEmail } = require("validator");
 
 const UserSchema = Schema(
   {
-    extraIds: {
-      type: Map,
-      of: String,
-    },
     email: {
       type: String,
       required: [true, "The email is required"],
