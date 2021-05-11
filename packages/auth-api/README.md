@@ -37,7 +37,7 @@ These are the required environment variables for the config of the app.
 # .env
 ENCRYPTION_SALT_DEVELOPMENT=10
 ENCRYPTION_SALT_PRODUCTION=10
-ACCESS_TOKEN_SECRET=...
+ACCESS_TOKEN_SECRET=... (simply a complex string)
 MONGO_DB_URL_PRODUCTION=mongodb://localhost/tripplanner-auth
 MONGO_DB_URL_DEVELOPMENT=mongodb://localhost/tripplanner-auth
 MONGO_DB_URL_TEST=mongodb://localhost/tripplanner-auth
