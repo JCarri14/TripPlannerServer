@@ -5,6 +5,7 @@ const { compareEncrypted } = require("../utils/encrypt");
 const {
   generateAccessToken,
 } = require("../services/auth/generate-access-token");
+const { generateResponse } = require("../utils/generateResponse");
 
 async function authenticate(req, res, next) {
   const { email, password: inputPassword } = req.body;
@@ -15,10 +16,11 @@ async function authenticate(req, res, next) {
     });
 
     if (userResponse.error) {
-      return res.status(400).send({
-        data: null,
-        error: userResponse.error,
-      });
+      return res.status(400).send(
+        generateResponse({
+          error: userResponse.error,
+        }),
+      );
     }
 
     if (userResponse.data) {
@@ -35,25 +37,32 @@ async function authenticate(req, res, next) {
         session.refreshTokens[refreshToken] = email;
 
         if (accessToken) {
-          return res.status(200).send({
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-            error: null,
-          });
+          return res.status(200).send(
+            generateResponse({
+              data: {
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+                id: userResponse.data._id,
+              },
+            }),
+          );
         } else {
-          return res.status(501).send({
-            data: null,
-            error: "Login error, something went wrong!",
-          });
+          return res.status(501).send(
+            generateResponse({
+              error: "Login error, something went wrong!",
+            }),
+          );
         }
       } else {
-        return res.status(401).send({
-          data: null,
-          error: "Login error, user and/or password not correct!",
-        });
+        return res.status(401).send(
+          generateResponse({
+            error: "Login error, user and/or password not correct!",
+          }),
+        );
       }
     }
   } catch (error) {
+    // console.log(error);
     next(error);
   }
 }
@@ -68,17 +77,21 @@ async function updateAccessToken(req, res, next) {
     const accessToken = generateAccessToken({ email: email });
 
     if (accessToken) {
-      return res.status(200).send({
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-        error: null,
-      });
+      return res.status(200).send(
+        generateResponse({
+          data: {
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+          },
+        }),
+      );
     }
   }
-  return res.status(501).send({
-    data: null,
-    error: "Something went wrong!",
-  });
+  return res.status(501).send(
+    generateResponse({
+      error: "Something went wrong!",
+    }),
+  );
 }
 
 async function rejectToken(req, res, next) {
@@ -88,10 +101,11 @@ async function rejectToken(req, res, next) {
     delete session.refreshTokens[refreshToken];
     return res.status(204).send();
   }
-  return res.status(501).send({
-    data: null,
-    error: "Something went wrong!",
-  });
+  return res.status(501).send(
+    generateResponse({
+      error: "Something went wrong!",
+    }),
+  );
 }
 
 module.exports = {
