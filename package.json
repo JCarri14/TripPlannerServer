@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "yarn workspaces run dev",
     "dev:gateway": "yarn workspace gateway run dev",
-    "dev:auth-api": "yarn workspace auth-api run dev",
-    "dev:data-api": "yarn workspace data-api run dev",
+    "dev:auth": "yarn workspace auth-api run dev",
+    "dev:data": "yarn workspace data-api run dev",
     "build": "yarn workspaces run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:js": "yarn workspaces run lint:js",
