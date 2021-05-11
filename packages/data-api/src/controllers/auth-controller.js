@@ -1,42 +1,39 @@
 const { UserRepo } = require("../repositories");
-const { encryptString, compareEncrypted } = require("../utils/encrypt");
+const { encryptString } = require("../utils/encrypt");
+const { generateResponse } = require("../utils/generateResponse");
 
 async function signIn(req, res, next) {
-  const { email, password: inputPassword } = req.body;
+  const { email, authId } = req.body;
 
   try {
     const userResponse = await UserRepo.findOne({
       email: email,
-      password: inputPassword,
     });
 
-    if (response.error) {
-      return res.status(400).send({
-        data: null,
-        error: response.error,
-      });
+    if (userResponse.error) {
+      return res.status(400).send(
+        generateResponse({
+          error: userResponse.error,
+        }),
+      );
     }
 
-    if (response.data) {
-      const { password } = userResponse.data;
-
-      const isUser = await compareEncrypted({
-        plainData: inputPassword,
-        encryptedData: password,
-      });
-
-      if (isUser) {
-        return res.status(200).send({
-          data: response.data,
-          error: null,
-        });
-      } else {
-        return res.status(401).send({
-          data: null,
-          error: "Login error, user and/or password not correct!",
-        });
-      }
+    if (userResponse.data) {
+      return res.status(200).send(
+        generateResponse({
+          data: userResponse.data,
+        }),
+      );
     }
+
+    await UserRepo.create({
+      extraIds: {
+        auth_id: authId,
+      },
+      email: email,
+    });
+
+    res.status(201).send(generateResponse({ data: "OK" }));
   } catch (error) {
     next(error);
   }
@@ -57,17 +54,19 @@ async function signUp(req, res, next) {
     });
 
     if (response.error) {
-      return res.status(400).send({
-        data: null,
-        error: response.error,
-      });
+      return res.status(400).send(
+        generateResponse({
+          error: response.error,
+        }),
+      );
     }
 
     if (response.data) {
-      return res.status(200).send({
-        data: response.data,
-        error: null,
-      });
+      return res.status(200).send(
+        generateResponse({
+          data: response.data,
+        }),
+      );
     }
   } catch (err) {
     next(err);
@@ -77,10 +76,11 @@ async function signUp(req, res, next) {
 async function signOut(req, res) {
   req.signOut();
 
-  res.status(200).send({
-    data: "OK",
-    error: null,
-  });
+  res.status(200).send(
+    generateResponse({
+      data: "OK",
+    }),
+  );
 }
 
 module.exports = {
