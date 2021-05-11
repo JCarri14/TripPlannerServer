@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -29,12 +29,6 @@ jobs:
       - name: api lint, format, test
         run: |
           yarn
-          yarn workspace api run lint:js
-          yarn workspace api run lint:format:check
-          yarn workspace api run test:ci:all
-      - name: web lint, format, test
-        run: |
-          yarn
-          yarn workspace web run lint:js
-          yarn workspace web run lint:format:check
-          yarn workspace web run test:ci:all
+          yarn run lint:js
+          yarn run lint:format:check
+          yarn run test:ci:all

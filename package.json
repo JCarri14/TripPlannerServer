@@ -2,10 +2,32 @@
   "name": "tripplannerserver",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "yarn workspaces run dev",
+    "dev:gateway": "yarn workspace gateway run dev",
+    "dev:auth": "yarn workspace auth-api run dev",
+    "dev:data": "yarn workspace data-api run dev",
+    "build": "yarn workspaces run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:js": "yarn workspaces run lint:js",
+    "lint:js:fix": "yarn workspaces run lint:js:fix",
+    "lint:format": "yarn workspaces run lint:format",
+    "lint:format:check": "yarn workspaces run lint:format:check",
+    "precommit": "yarn workspaces run precommit"
   },
   "author": "Joan Carrion",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": "https://github.com/JCarri14/TripPlannerServer.git",
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "commitlint": "^12.1.1",
+    "eslint": "^7.26.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0"
+  }
 }
