@@ -36,20 +36,19 @@ const UserSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: "location",
     },
-    metadata: {
-      extraIds: {
-        type: Map,
-        of: String,
-      },
-      active: {
-        type: Boolean,
-        default: true,
-      },
-      lastActiveAt: {
-        type: Date,
-        default: Date.now,
-      },
+    extraIds: {
+      type: Map,
+      of: String,
     },
+    active: {
+      type: Boolean,
+      default: true,
+    },
+    lastActiveAt: {
+      type: Date,
+      default: Date.now,
+    },
+
     trips: {
       type: [
         {

@@ -25,7 +25,7 @@ async function fetchUserById(req, res, next) {
     params: { id: userId },
     query: { fullFetch },
   } = req;
-  
+
   try {
     const dbResponse = await UserRepo.findById(userId);
 
@@ -66,14 +66,14 @@ async function fetchUserTrips(req, res, next) {
       const { trips } = dbResponse.data;
       result = trips;
 
-      if (fullFetch) {      
-        result = trips.map((tripId) => {
+      if (fullFetch) {
+        result = await trips.map(async (tripId) => {
           const tripResponse = await TripRepo.findById(tripId);
           if (tripResponse.data) return tripResponse.data;
           return null;
         });
       }
-      
+
       res.status(200).send({
         data: result,
         error: null,
@@ -106,14 +106,14 @@ async function fetchUserFollowings(req, res, next) {
 
       result = following;
 
-      if (fullFetch) {      
-        result = following.map((tripId) => {
+      if (fullFetch) {
+        result = await following.map(async (tripId) => {
           const userResponse = await UserRepo.findById(tripId);
-          if (userResponse.data) return tripResponse.data;
+          if (userResponse.data) return userResponse.data;
           return null;
         });
       }
-      
+
       res.status(200).send({
         data: result,
         error: null,

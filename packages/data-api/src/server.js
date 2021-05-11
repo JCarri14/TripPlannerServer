@@ -4,7 +4,8 @@ const morgan = require("morgan");
 const { json } = require("body-parser");
 const cors = require("cors");
 
-const { config } = require("./config");
+// const { config } = require("./config");
+const { userRouter, accountRouter } = require("./routes");
 // const { errorMiddleware } = require("./middlewares");
 
 const app = express();
@@ -13,6 +14,9 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(json());
 app.use(cors());
+
+app.use("/account", accountRouter);
+app.use("/users", userRouter);
 
 app.get("/", (req, res) => {
   res.status(200).send({
